@@ -77,50 +77,6 @@
             <div v-if="clients && clients.length > 0" v-for="client in clients" :key="client.id"
               class="relative overflow-hidden border-b border-gray-100 border-solid">
 
-              <!-- Chart -->
-              <div class="absolute z-0 bottom-0 left-0 right-0" style="width: 100%; height: 20%;">
-                <!-- Bar -->
-                <div v-for="(_, index) in client.transferTxHistory" :style="{
-                    display: 'inline-flex',
-                    alignItems: 'flex-end',
-                    width: '2%', // 1/100th of client.transferTxHistory.length
-                    height: '100%',
-                    padding: '0 3px',
-                    boxSizing: 'border-box',
-                    fontSize: 0,
-                  }">
-
-                  <!-- TX -->
-                  <div :style="{
-                    minHeight: '0px',
-                    minWidth: '2px',
-                    maxWidth: '4px',
-                    width: '50%',
-                    marginRight: '1px',
-                    height: Math.round((client.transferTxHistory[index]/client.transferMax)*100) + '%',
-                    background: client.hoverTx
-                      ? '#992922'
-                      : '#F3F4F6',
-                    transition: 'all 0.2s',
-                    borderRadius: '2px 2px 0 0',
-                  }"></div>
-
-                  <!-- RX -->
-                  <div :style="{
-                    minHeight: '0px',
-                    minWidth: '2px',
-                    maxWidth: '4px',
-                    width: '50%',
-                    height: Math.round((client.transferRxHistory[index]/client.transferMax)*100) + '%',
-                    background: client.hoverRx
-                    ? '#992922'
-                    : '#F0F1F3',
-                    transition: 'all 0.2s',
-                    borderRadius: '2px 2px 0 0',
-                  }"></div>
-                </div>
-              </div>
-
               <div class="relative p-5 z-10 flex flex-row">
                 <div class="h-10 w-10 mr-5 rounded-full bg-gray-50 relative">
                   <svg class="w-6 m-2 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
@@ -190,36 +146,6 @@
                             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                       </span>
-                    </span>
-
-                    <!-- Transfer TX -->
-                    <span v-if="client.transferTx" :title="'Total Download: ' + bytes(client.transferTx)"
-                      @mouseover="client.hoverTx = clientsPersist[client.id].hoverTx = true;"
-                      @mouseleave="client.hoverTx = clientsPersist[client.id].hoverTx = false;"
-                      style="cursor: default;">
-                      ·
-                      <svg class="align-middle h-3 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                          d="M16.707 10.293a1 1 0 010 1.414l-6 6a1 1 0 01-1.414 0l-6-6a1 1 0 111.414-1.414L9 14.586V3a1 1 0 012 0v11.586l4.293-4.293a1 1 0 011.414 0z"
-                          clip-rule="evenodd" />
-                      </svg>
-                      {{client.transferTxCurrent | bytes}}/s
-                    </span>
-
-                    <!-- Transfer RX -->
-                    <span v-if="client.transferRx" :title="'Total Upload: ' + bytes(client.transferRx)"
-                      @mouseover="client.hoverRx = clientsPersist[client.id].hoverRx = true;"
-                      @mouseleave="client.hoverRx = clientsPersist[client.id].hoverRx = false;"
-                      style="cursor: default;">
-                      ·
-                      <svg class="align-middle h-3 inline" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                          d="M3.293 9.707a1 1 0 010-1.414l6-6a1 1 0 011.414 0l6 6a1 1 0 01-1.414 1.414L11 5.414V17a1 1 0 11-2 0V5.414L4.707 9.707a1 1 0 01-1.414 0z"
-                          clip-rule="evenodd" />
-                      </svg>
-                      {{client.transferRxCurrent | bytes}}/s
                     </span>
 
                     <!-- Last seen -->
